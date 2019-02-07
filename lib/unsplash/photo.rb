@@ -84,13 +84,15 @@ module Unsplash # :nodoc:
       # @param page  [Integer] Which page of search results to return.
       # @param per_page [Integer] The number of users search result per page. (default: 10, maximum: 30)
       # @param orientation [String] Filter by orientation of the photo. Valid values are landscape, portrait, and squarish.
+      # @param collections [String] Filter by collection ids. It needs to be comma-separated
       # @return [SearchResult] a list of +Unsplash::Photo+ objects.
-      def search(query, page = 1, per_page = 10, orientation = nil)
+      def search(query, page = 1, per_page = 10, orientation = nil, collections = nil)
         params = {
           query:    query,
           page:     page,
           per_page: per_page,
-          orientation: orientation
+          orientation: orientation,
+          collections: (collections && collections.join(","))
         }.select { |_k, v| v }
         Unsplash::Search.search("/search/photos", self, params)
       end
